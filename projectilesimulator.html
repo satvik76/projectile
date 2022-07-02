@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>Projectile</title>
+        <style>
+          body {
+          background-image: linear-gradient(to right,white,blue);
+          }
+          #ball{
+            background:red;
+            border-radius:50%;
+            position:absolute;
+            width:50px;
+            height:50px;
+            top:0px;
+          }
+          hr {
+          width:100%;
+          }
+        </style>
+    </head>
+    <body onload="start()">
+        <div id="ball"></div>
+        <hr id="hr">
+        <h1 id="y"></h1>
+        <h2 id="x"></h2>
+        <p><span id="maxh"></span> <span id="maxR"></span></p>
+        <h2 id="time"></h2>
+    <script>
+      var elem=document.getElementById("hr");
+      var o=0;
+      var time=0;
+      var k=0;
+      var u=prompt("enter speed max 100");
+      alert("if angle greater than 90 will show motion for 180-angle");
+      var ang=prompt("enter angle in degree");
+      if(ang>90)
+      ang=180-ang;
+      var deg=Math.sin(ang*Math.PI/180);
+      //console.log(deg);
+      var tp=(u*deg)/10;
+      var p=0;
+      den=Math.cos(ang*Math.PI/180);
+      var max=(u*u*deg*deg)/20;
+      document.getElementById("maxh").innerHTML="Max Height: "+Math.round(max);
+      document.getElementById("maxR").innerHTML="Range: "+Math.round(u*den*tp*2);
+      elem.style.marginTop=(max+50)+"px";
+      function start(){
+        var t=setInterval(frame,5);
+        function frame(){
+          if(p>=tp){
+          clearInterval(t);
+          document.getElementById("y").innerHTML="Y: 0";
+          document.getElementById("x").innerHTML="X: "+Math.round(u*den*tp*2); 
+          document.getElementById("time").innerHTML="Time: "+(2*tp);
+          return;}
+          else{
+          time++;
+          o+=0.01;
+          console.log(o);
+          var x=u*den*o;
+          if(o<=tp)
+          {
+          var y=u*deg*o-5*o*o;
+          document.getElementById("ball").style.top =(max-y)+"px";
+          document.getElementById("y").innerHTML="Y: "+Math.round(y); 
+          }
+          else{
+          p+=0.01;
+          var y=5*p*p;
+          document.getElementById("ball").style.top =y+"px";
+          document.getElementById("y").innerHTML="Y: "+Math.round((max-y)); 
+          }
+          document.getElementById("ball").style.left =x+"px";
+          document.getElementById("x").innerHTML="X: "+Math.round(x); 
+         }}
+      }
+    </script>
+    </body>
+</html>
